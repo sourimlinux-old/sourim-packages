@@ -1,4 +1,4 @@
-export CC="gcc"
+#export CC="gcc"
 export CFLAGS="-O2 -Wall -Wextra"
 export CXXFLAGS="$CFLAGS"
 export MAKEFLAGS="-j`nproc`"

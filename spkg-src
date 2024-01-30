@@ -122,7 +122,7 @@ fetchDepends() {
     unset pkg_patches
 }
 clear_temp() {
-    if [ ! -z "`find /tmp/spkg-* 2> /dev/null`"]; then
+    if [ ! -z "`find /tmp/spkg-* 2> /dev/null`" ]; then
         show_log "Clear temp files..."
         rm -rf /tmp/spkg-* || show_err "rm"
     fi
