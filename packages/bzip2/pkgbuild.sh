@@ -1,7 +1,6 @@
 pkg_name="bzip2"
 pkg_version="1.0.8"
 pkg_depends="glibc"
-pkg_description="A high-quality data compression program."
 
 pkg_src="https://www.sourceware.org/pub/bzip2/bzip2-$pkg_version.tar.gz"
 pkg_src_dir="bzip2-$pkg_version"

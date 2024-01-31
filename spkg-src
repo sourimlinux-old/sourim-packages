@@ -124,7 +124,7 @@ fetchDepends() {
 clear_temp() {
     if [ ! -z "`find /tmp/spkg-* 2> /dev/null`" ]; then
         show_log "Clear temp files..."
-        rm -rf /tmp/spkg-* || show_err "rm"
+        sudo rm -rf /tmp/spkg-* || show_err "rm"
     fi
 }
 
@@ -152,13 +152,12 @@ case $1 in
         ;;
     "search")
         pkgs=`ls packages`
+
         for pkg in $pkgs; do
             . ./packages/$pkg/pkgbuild.sh
-            arg="$pkg_name $pkg_description"
 
-            if [[ "$arg" = *"$2"* ]]; then
+            if [[ "$pkg_name" = *"$2"* ]]; then
                 echo -e "$GREEN$pkg_name$ENDCOLOR\t($YELLOW$pkg_version$ENDCOLOR)"
-                echo -e "$BRIGHT$pkg_description$ENDCOLOR"
             fi
         done
         ;;

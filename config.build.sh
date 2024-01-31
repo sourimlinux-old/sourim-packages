@@ -1,5 +1,5 @@
 #export CC="gcc"
-export CFLAGS="-O2 -Wall -Wextra"
+export CFLAGS="-O2"
 export CXXFLAGS="$CFLAGS"
 export MAKEFLAGS="-j`nproc`"
 

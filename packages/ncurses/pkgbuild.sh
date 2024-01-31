@@ -1,7 +1,6 @@
 pkg_name="ncurses"
 pkg_version="6.4-20230520"
 pkg_depends="glibc"
-pkg_description="System V Release 4.0 curses emulation library"
 
 pkg_src="https://anduin.linuxfromscratch.org/LFS/ncurses-$pkg_version.tar.xz"
 pkg_src_dir="ncurses-$pkg_version"

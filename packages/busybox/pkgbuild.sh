@@ -1,7 +1,6 @@
 pkg_name="busybox"
 pkg_version="1.36.1"
 pkg_depends="glibc"
-pkg_description="Utilities for rescue and embedded systems"
 
 pkg_src="https://www.busybox.net/downloads/busybox-$pkg_version.tar.bz2"
 pkg_src_dir="busybox-$pkg_version"

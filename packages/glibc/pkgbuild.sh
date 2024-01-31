@@ -1,7 +1,6 @@
 pkg_name="glibc"
 pkg_version="2.38"
 pkg_depends=""
-pkg_description="GNU C Library"
 
 pkg_src="https://ftp.gnu.org/gnu/glibc/glibc-$pkg_version.tar.xz"
 pkg_src_dir="glibc-$pkg_version"

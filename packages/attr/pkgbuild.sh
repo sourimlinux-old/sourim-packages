@@ -1,7 +1,6 @@
 pkg_name="attr"
 pkg_version="2.5.2"
 pkg_depends="glibc"
-pkg_description="Extended attribute support library for ACL support"
 
 pkg_src="https://mirror.downloadvn.com/nongnu/attr/attr-$pkg_version.tar.xz"
 pkg_src_dir="attr-$pkg_version"

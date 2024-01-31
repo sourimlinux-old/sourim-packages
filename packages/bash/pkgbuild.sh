@@ -1,7 +1,6 @@
 pkg_name="bash"
 pkg_version="5.2.21"
 pkg_depends="glibc readline"
-pkg_description="Bourne-Again Shell."
 
 pkg_src="https://ftp.gnu.org/gnu/bash/bash-$pkg_version.tar.gz"
 pkg_src_dir="bash-$pkg_version"

@@ -1,7 +1,6 @@
 pkg_name="readline"
 pkg_version="8.2"
 pkg_depends="glibc ncurses"
-pkg_description="GNU readline library"
 
 pkg_src="https://ftp.gnu.org/gnu/readline/readline-$pkg_version.tar.gz"
 pkg_src_dir="readline-$pkg_version"
