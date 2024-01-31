@@ -12,6 +12,5 @@ pkg_build() {
 
     make
     make -C libelf install DESTDIR=$1
-    install -vm644 config/libelf.pc $1/usr/lib/pkgconfig
     rm $1/usr/lib/libelf.a
 }
