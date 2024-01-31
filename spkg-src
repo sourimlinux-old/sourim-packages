@@ -109,9 +109,9 @@ build_package() {
 
     # End
 
+    command popd > /dev/null
+    command popd > /dev/null
     clear_temp
-    command popd > /dev/null
-    command popd > /dev/null
 }
 
 fetchDepends() {
