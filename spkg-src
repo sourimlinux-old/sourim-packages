@@ -60,8 +60,10 @@ build_package() {
     command pushd $SPKG_TEMP/src > /dev/null
 
     # Downloding
-    show_log "Download source file '$(basename $pkg_src)'..."
-    wget $pkg_src > /dev/null || show_err "download source"
+    if [ ! -z "$pkg_src" ]; then
+        show_log "Download source file '$(basename $pkg_src)'..."
+        wget $pkg_src > /dev/null || show_err "download source"
+    fi
 
     for pkg_patch in ${pkg_patches[*]}; do
         show_log "Download patch '$(basename $pkg_patch)'..."
@@ -69,8 +71,10 @@ build_package() {
     done
 
     # Unpacking and patching
-    show_log "Unpacking source file..."
-    tar xf `basename $pkg_src` || show_err "unpack source file"
+    if [ ! -z "$pkg_src" ]; then
+        show_log "Unpacking source file..."
+        tar xf `basename $pkg_src` || show_err "unpack source file"
+    fi
     cd ./$pkg_src_dir || show_err "cd"
 
     for pkg_patch in ${pkg_patches[*]}; do
