@@ -42,6 +42,8 @@ fi
 
 build_package() {
     unset pkg_patches
+    unset pkg_src
+    unset pkg_src_dir
     if [ ! -d packages/$1 ]; then
         show_err "Package not found '$1'"
     fi
