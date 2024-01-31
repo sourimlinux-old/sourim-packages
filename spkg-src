@@ -109,6 +109,7 @@ build_package() {
 
     # End
 
+    clear_temp
     command popd > /dev/null
     command popd > /dev/null
 }
@@ -146,15 +147,11 @@ case $1 in
         ;;
     "build")
         build_package $2
-
-        clear_temp
         ;;
     "build-all")
         for pkg in `ls packages`; do
             build_package $pkg
         done
-
-        clear_temp
         ;;
     "search")
         pkgs=`ls packages`
