@@ -14,10 +14,11 @@ pkg_build() {
     make -f Makefile-libbz2_so
     make clean
     make
-    make PREFIX=/usr DESTDIR=$1 install
+    make PREFIX=$1/usr install
 
     cp -av libbz2.so.* $1/usr/lib
     ln -sv libbz2.so.1.0.8 $1/usr/lib/libbz2.so
+    ln -sv libbz2.so.1.0.8 $1/usr/lib/libbz2.so.1
 
     cp -v bzip2-shared $1/usr/bin/bzip2
     for i in $1/usr/bin/{bzcat,bunzip2}; do
