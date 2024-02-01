@@ -3,7 +3,11 @@ pkg_version="0.1"
 pkg_depends="glibc coreutils bash util-linux iproute2 gawk tar xz bzip2 spkg"
 
 pkg_build() {
-    mkdir -p $1/usr/{lib,bin}
+    mkdir -p $1/etc $1/usr/{lib,bin}
+
+    echo "NAME=\"sourim\"" > $1/etc/os-release
+    echo "PRETTY_NAME=\"Sourim Linux\"" >> $1/etc/os-release
+
     pushd $1
 
     ln -vs usr/bin bin
