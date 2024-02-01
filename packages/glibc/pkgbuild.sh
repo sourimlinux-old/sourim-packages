@@ -4,10 +4,6 @@ pkg_depends=""
 
 pkg_src="https://ftp.gnu.org/gnu/glibc/glibc-$pkg_version.tar.xz"
 pkg_src_dir="glibc-$pkg_version"
-pkg_patches=(
-    "https://www.linuxfromscratch.org/patches/lfs/development/glibc-$pkg_version-upstream_fixes-3.patch"
-    "https://www.linuxfromscratch.org/patches/lfs/development/glibc-$pkg_version-fhs-1.patch"
-)
 
 pkg_build() {
     mkdir build

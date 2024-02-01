@@ -4,9 +4,6 @@ pkg_depends="glibc ncurses"
 
 pkg_src="https://ftp.gnu.org/gnu/readline/readline-$pkg_version.tar.gz"
 pkg_src_dir="readline-$pkg_version"
-pkg_patches=(
-    "https://www.linuxfromscratch.org/patches/lfs/development/readline-8.2-upstream_fixes-2.patch"
-)
 
 pkg_build() {
     sed -i '/MV.*old/d' Makefile.in

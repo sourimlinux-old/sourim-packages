@@ -11,7 +11,7 @@ pkg_build() {
 
     meson setup --prefix=/usr --buildtype=release
     ninja
-    ninja install DESTDIR=$1
+    DESTDIR=$1 ninja install
 
     cd ..
 }
