@@ -10,6 +10,6 @@ pkg_build() {
                 --sysconfdir=/etc  \
                 --with-ssl=openssl
     make
-    echo "Installing wirh root."
-    sudo make install DESTDIR=$1
+    
+    make install DESTDIR=$1
 }

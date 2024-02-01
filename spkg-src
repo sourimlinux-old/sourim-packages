@@ -85,12 +85,13 @@ build_package() {
     done
 
     show_log "Running build"
-    pkg_build $SPKG_TEMP/root || show_err "build error"
+    PKGBUILD_TMP=$(declare -f pkg_build)
+    fakeroot -- bash -c "$PKGBUILD_TMP; pkg_build $SPKG_TEMP/root" || show_err "build error"
 
     # Packing package
     command pushd $SPKG_TEMP/root > /dev/null
     show_log "Packing rootfs..."
-    XZ_OPT=$XZ_FLAGS tar cfJ rootfs.tar.xz * || show_err "packing rootfs"
+    fakeroot -- bash -c "XZ_OPT=\"$XZ_FLAGS\" tar cfJ rootfs.tar.xz *" || show_err "packing rootfs"
 
     show_log "Writing pkginfo"
     command echo "pkgname=\"$pkg_name\"" > $SPKG_TEMP/root/pkginfo || show_err "write pkginfo"
@@ -105,7 +106,7 @@ build_package() {
     #fi
 
     show_log "Packing package..."
-    tar cf $SPKG/output/$pkg_name-$pkg_version-$ARCH.tar $outargs || show_err "packing package"
+    fakeroot tar cf $SPKG/output/$pkg_name-$pkg_version-$ARCH.tar $outargs || show_err "packing package"
 
     # End
 
@@ -131,7 +132,7 @@ fetchDepends() {
 clear_temp() {
     if [ ! -z "`find /tmp/spkg-* 2> /dev/null`" ]; then
         show_log "Clear temp files..."
-        sudo rm -rf /tmp/spkg-* || show_err "rm"
+        fakeroot rm -rf /tmp/spkg-* || show_err "rm"
     fi
 }
 
@@ -142,8 +143,6 @@ case $1 in
         for pkg in $buildjobs; do
             build_package $pkg
         done
-
-        clear_temp
         ;;
     "build")
         build_package $2

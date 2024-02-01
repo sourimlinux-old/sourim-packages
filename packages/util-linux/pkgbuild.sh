@@ -26,6 +26,6 @@ pkg_build() {
                 --docdir=/usr/share/doc/util-linux-$pkg_version
     
     make
-    echo "Installing wirh root."
-    sudo make install DESTDIR=$1
+    
+    make install DESTDIR=$1
 }

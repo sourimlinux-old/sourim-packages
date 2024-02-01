@@ -10,7 +10,6 @@ pkg_build() {
 
     make
     
-    echo "Installing with root."
-    sudo make install DESTDIR=$1
-    sudo rm -fv $1/usr/lib/libz.a
+    make install DESTDIR=$1
+    rm -fv $1/usr/lib/libz.a
 }
