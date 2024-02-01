@@ -1,6 +1,6 @@
 pkg_name="base"
 pkg_version="0.1"
-pkg_depends="glibc coreutils bash util-linux iproute2 gawk tar xz bzip2 spkg"
+pkg_depends="glibc coreutils bash util-linux iproute2 inetutils gawk tar xz bzip2 spkg"
 
 pkg_build() {
     mkdir -p $1/etc $1/usr/{lib,bin}
