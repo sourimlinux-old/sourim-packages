@@ -18,6 +18,7 @@ pkg_build() {
     make
 
     make DESTDIR=$PWD/dest install
+    mkdir -p $1/usr/lib/pkgconfig
     install -vm755 dest/usr/lib/libncursesw.so.6.4 $1/usr/lib
     rm -v dest/usr/lib/libncursesw.so.6.4
     sed -e 's/^#if.*XOPEN.*$/#if 1/' \
