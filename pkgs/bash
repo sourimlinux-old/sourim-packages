@@ -1,0 +1,21 @@
+name="bash"
+version="5.2.21"
+depends="glibc readline ncurses"
+source=(
+    "https://ftp.gnu.org/gnu/bash/bash-$version.tar.gz"
+)
+source_sha256=(
+    "c8e31bdc59b69aaffc5b36509905ba3e5cbb12747091d27b4b977f078560d5b8"
+)
+
+package() {
+    cd $name-$version
+
+    ./configure --prefix=/usr             \
+                --without-bash-malloc     \
+                --with-installed-readline \
+                --docdir=/usr/share/doc/bash-$version
+
+    make
+    make install DESTDIR=$1
+}

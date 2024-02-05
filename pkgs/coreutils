@@ -2,7 +2,7 @@ name="coreutils"
 version="9.4"
 depends="glibc"
 source=(
-    "https://ftp.gnu.org/gnu/coreutils/coreutils-9.4.tar.xz"
+    "https://ftp.gnu.org/gnu/coreutils/coreutils-$version.tar.xz"
 )
 source_sha256=(
     "ea613a4cf44612326e917201bbbcdfbd301de21ffc3b59b6e5c07e040b275e52"
