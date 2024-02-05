@@ -1,11 +1,17 @@
-pkg_name="ncurses"
-pkg_version="6.4-20230520"
-pkg_depends="glibc"
+name="ncurses"
+version="6.4-20230520"
+depends="glibc"
+source=(
+    "https://anduin.linuxfromscratch.org/LFS/ncurses-$version.tar.xz"
+)
+source_sha256=(
+    "d76a52f604718bc5e6b48943b021c1e4463cc6b226a44cfe19a3698b6f895579"
+)
 
-pkg_src="https://anduin.linuxfromscratch.org/LFS/ncurses-$pkg_version.tar.xz"
-pkg_src_dir="ncurses-$pkg_version"
+package() {
+    cd $name-$version
+    mkdir -p $1/usr/{share/doc,lib/pkgconfig}
 
-pkg_build() {
     ./configure --prefix=/usr           \
                 --mandir=/usr/share/man \
                 --with-shared           \
@@ -18,9 +24,8 @@ pkg_build() {
     make
 
     make DESTDIR=$PWD/dest install
-    mkdir -p $1/usr/lib/pkgconfig
     install -vm755 dest/usr/lib/libncursesw.so.6.4 $1/usr/lib
-    rm -v dest/usr/lib/libncursesw.so.6.4
+    rm -v  dest/usr/lib/libncursesw.so.6.4
     sed -e 's/^#if.*XOPEN.*$/#if 1/' \
         -i dest/usr/include/curses.h
     cp -av dest/* $1/
@@ -31,6 +36,5 @@ pkg_build() {
     done
 
     ln -sfv libncursesw.so $1/usr/lib/libcurses.so
-    mkdir -pv $1/usr/share/doc/
-    cp -v -R doc -T $1/usr/share/doc/ncurses-$pkg_version
+    cp -v -R doc -T $1/usr/share/doc/ncurses-$version
 }

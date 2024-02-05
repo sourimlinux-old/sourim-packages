@@ -1,169 +1,65 @@
 #!/bin/bash
 
-BRIGHT="\e[1m"
-RED="\e[31m"
-GREEN="\e[32m"
-YELLOW="\e[33m"
-BLUE="\e[34m"
-ENDCOLOR="\e[0m"
+FLAG_FORCE=
+MAKEPKG_OPTS="-q"
 
-LOG="${BLUE}*${ENDCOLOR}"
-ERR="${RED}*${ENDCOLOR}"
-
-SPKG=`pwd`
-SPKG_CACHE=~/.cache/spkg
-SPKG_TEMP=/tmp/spkg-$RANDOM
-
-
-buildjobs=
 mkdir -p output
-. config.build.sh
 
-show_help() {
-    echo "Usage: $0 build|build-all-depends|search <package name>"
-    exit 1
-}
-show_msg() {
-    echo -e " $1 ${BRIGHT}${@:2}${ENDCOLOR}"
-}
-show_log() {
-    show_msg "$LOG" $1
-}
 show_err() {
-    show_msg "$ERR" $1
+    echo $@ 1>&2
+    exit 2
+}
+usage() {
+    echo "Usage: $0 COMMAND OPTIONS PACKAGE(s)"             1>&2
+    echo "Commands:"                                        1>&2
+    echo "  build         Build package from source"        1>&2
+    echo "  build-all     Build all packages from source"   1>&2
+    echo "  help          Show this message"                1>&2
+    echo "Options:"                                         1>&2
+    echo "  -f            Forced to build packages"         1>&2
+    echo "  -v            Enable log output"                1>&2
     exit 1
 }
-
-if [ -z $1 ] || [ -z $2 ]; then
-    if [ "$1" != "build-all" ]; then
-        show_help
-    fi
+if (($# < 1)); then
+    usage
 fi
 
-build_package() {
-    unset pkg_patches
-    unset pkg_src
-    unset pkg_src_dir
-    if [ ! -d packages/$1 ]; then
-        show_err "Package not found '$1'"
-    fi
+while getopts "f" option; do
+    case $option in
+        f)   FLAG_FORCE=y   ;;
+        v)   MAKEPKG_OPTS=  ;;
+    esac
+done
 
-    . packages/$1/pkgbuild.sh
-    if [ -f "$SPKG/output/$1-$pkg_version-$ARCH.tar" ]; then
-        #read -p "This package has already been built, are you sure you want to rebuild it?(y/N): " rebuild
-        #if [ "$rebuild" != "y" ]; then
-        return
-        #fi
-    fi
 
-    show_log "Building '$1' package"
-    mkdir -p $SPKG_TEMP/{src,root}
+buildpkg() {
+    [[ ! -f pkgs/$1 ]] && show_err "'$1' package not found"
 
-    command pushd $SPKG_TEMP/src > /dev/null
+    cd output || exit 1
+        . ../pkgs/$1 || exit 1
 
-    # Downloding
-    if [ ! -z "$pkg_src" ]; then
-        show_log "Download source file '$(basename $pkg_src)'..."
-        wget $pkg_src > /dev/null || show_err "download source"
-    fi
-
-    for pkg_patch in ${pkg_patches[*]}; do
-        show_log "Download patch '$(basename $pkg_patch)'..."
-        wget $pkg_patch > /dev/null || show_err "download patch"
-    done
-
-    # Unpacking and patching
-    if [ ! -z "$pkg_src" ]; then
-        show_log "Unpacking source file..."
-        tar xf `basename $pkg_src` || show_err "unpack source file"
-    fi
-    cd ./$pkg_src_dir || show_err "cd"
-
-    for pkg_patch in ${pkg_patches[*]}; do
-        show_log "Apply patch $(basename $pkg_patch)..."
-        command patch -Np1 -i ../$(basename $pkg_patch) > /dev/null || show_err "patching source"
-    done
-
-    show_log "Running build"
-    PKGBUILD_TMP=$(declare -f pkg_build)
-    fakeroot -- bash -c "$PKGBUILD_TMP; pkg_build $SPKG_TEMP/root" || show_err "build error"
-
-    # Packing package
-    command pushd $SPKG_TEMP/root > /dev/null
-    show_log "Packing rootfs..."
-    fakeroot -- bash -c "XZ_OPT=\"$XZ_FLAGS\" tar cfJ rootfs.tar.xz *" || show_err "packing rootfs"
-
-    show_log "Writing pkginfo"
-    command echo "pkgname=\"$pkg_name\"" > $SPKG_TEMP/root/pkginfo || show_err "write pkginfo"
-    command echo "pkgversion=\"$pkg_version\"" >> $SPKG_TEMP/root/pkginfo || show_err "write pkginfo"
-    command echo "pkgdepends=\"$pkg_depends\"" >> $SPKG_TEMP/root/pkginfo || show_err "write pkginfo"
-
-    outargs="rootfs.tar.xz pkginfo "
-    #if [ -f $SPKG/packages/$pkg_name/configure ]; then
-    #    outargs+="configure"
-    #    echo "Copy configure script"
-    #    cp $SPKG/packages/$pkg_name/configure $SPKG_TEMP/root || show_err "copy configure"
-    #fi
-
-    show_log "Packing package..."
-    fakeroot tar cf $SPKG/output/$pkg_name-$pkg_version-$ARCH.tar $outargs || show_err "packing package"
-
-    # End
-
-    command popd > /dev/null
-    command popd > /dev/null
-    clear_temp
-}
-
-fetchDepends() {
-    if [ ! -f $SPKG/packages/$1/pkgbuild.sh ]; then
-        show_err "Package not found '$1'"
-    fi
-    . $SPKG/packages/$1/pkgbuild.sh
-
-    for depend in $pkg_depends; do
-        fetchDepends $depend
-        if [[ "$buildjobs" != *"$depend"* ]]; then
-            buildjobs+=" $depend"
+        if [[ ! -f "$name-$version-`uname -m`.spkg" || ! -z "$FLAG_FORCE" ]]; then
+            echo "Start building '$1'..."
+            makepkg $MAKEPKG_OPTS ../pkgs/$1 || exit 1
         fi
-    done
-    unset pkg_patches
-}
-clear_temp() {
-    if [ ! -z "`find /tmp/spkg-* 2> /dev/null`" ]; then
-        show_log "Clear temp files..."
-        fakeroot rm -rf /tmp/spkg-* || show_err "rm"
-    fi
+    cd ..
 }
 
 case $1 in
-    "build-all-depends")
-        fetchDepends $2
-        buildjobs+=" $2"
-        for pkg in $buildjobs; do
-            build_package $pkg
+    build)
+        shift 1
+        [[ -z $@ ]] && show_err "error: nothing to build."
+
+        for pkg in $@; do
+            buildpkg $pkg
         done
-        ;;
-    "build")
-        build_package $2
-        ;;
+    ;;
     "build-all")
-        for pkg in `ls packages`; do
-            build_package $pkg
+        for pkg in `ls pkgs`; do
+            buildpkg $pkg
         done
-        ;;
-    "search")
-        pkgs=`ls packages`
-
-        for pkg in $pkgs; do
-            . ./packages/$pkg/pkgbuild.sh
-
-            if [[ "$pkg_name" = *"$2"* ]]; then
-                echo -e "$GREEN$pkg_name$ENDCOLOR\t($YELLOW$pkg_version$ENDCOLOR)"
-            fi
-        done
-        ;;
-    *)
-        show_help
-        ;;
+    ;;
+    * | help)
+        usage
+    ;;
 esac
