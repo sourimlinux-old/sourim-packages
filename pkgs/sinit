@@ -1,0 +1,11 @@
+name="sinit"
+version="test"
+depends="bash util-linux"
+source=(
+    "git+https://github.com/sourimlinux/sinit"
+)
+
+package() {
+    cd $name
+    make install DESTDIR=$1
+}

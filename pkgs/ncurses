@@ -4,9 +4,6 @@ depends="glibc"
 source=(
     "https://anduin.linuxfromscratch.org/LFS/ncurses-$version.tar.xz"
 )
-source_sha256=(
-    "d76a52f604718bc5e6b48943b021c1e4463cc6b226a44cfe19a3698b6f895579"
-)
 
 package() {
     cd $name-$version

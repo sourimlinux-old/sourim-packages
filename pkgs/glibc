@@ -4,9 +4,6 @@ depends=""
 source=(
     "https://ftp.gnu.org/gnu/glibc/glibc-$version.tar.xz"
 )
-source_sha256=(
-    "f77bd47cf8170c57365ae7bf86696c118adb3b120d3259c64c502d3dc1e2d926"
-)
 
 package() {
     cd $name-$version

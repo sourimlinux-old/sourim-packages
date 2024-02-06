@@ -1,0 +1,14 @@
+name="base"
+version="0.0.1"
+depends="bash coreutils neofetch sinit"
+source=()
+source_sha256=()
+
+package() {
+    mkdir -p $1/etc
+    
+    cat > $1/etc/os-release << EOF
+NAME="sourim"
+PRETTY_NAME="SourimLinux `uname -m`"
+EOF
+}

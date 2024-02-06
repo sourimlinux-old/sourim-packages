@@ -44,6 +44,12 @@ buildpkg() {
         fi
     cd ..
 }
+makeinfo() {
+    cd output || exit 1
+        spkg-rindex *.spkg || exit            
+    cd ..
+    echo "Writing repo info done."
+}
 
 case $1 in
     build)
@@ -53,11 +59,13 @@ case $1 in
         for pkg in $@; do
             buildpkg $pkg
         done
+        makeinfo
     ;;
     "build-all")
         for pkg in `ls pkgs`; do
             buildpkg $pkg
         done
+        makeinfo
     ;;
     * | help)
         usage
