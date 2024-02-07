@@ -1,0 +1,15 @@
+name="nano"
+version="7.2"
+depends="glibc"
+source=(
+    "https://www.nano-editor.org/dist/v7/nano-$version.tar.xz"
+)
+
+package() {
+    ./configure --prefix=/usr     \
+                --sysconfdir=/etc \
+                --enable-utf8     \
+                --docdir=/usr/share/doc/nano-7.2
+    make
+    make install DESTDIR=$1
+}
