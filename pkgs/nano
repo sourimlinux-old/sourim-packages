@@ -6,6 +6,7 @@ source=(
 )
 
 package() {
+    cd $name-$version
     ./configure --prefix=/usr     \
                 --sysconfdir=/etc \
                 --enable-utf8     \
