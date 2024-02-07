@@ -44,6 +44,14 @@ buildpkg() {
         fi
     cd ..
 }
+build() {
+    . pkgs/$1 || exit 1
+
+    for depend in $depends; do
+        build $depend
+    done
+    build $1
+}
 makeinfo() {
     cd output || exit 1
         spkg-rindex *.spkg || exit            
@@ -57,7 +65,7 @@ case $1 in
         [[ -z $@ ]] && show_err "error: nothing to build."
 
         for pkg in $@; do
-            buildpkg $pkg
+            build $pkg
         done
         makeinfo
     ;;

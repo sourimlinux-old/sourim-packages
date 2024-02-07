@@ -1,14 +1,20 @@
 name="base"
 version="0.0.1"
-depends="bash coreutils neofetch sinit"
+depends="bash coreutils neofetch sinit shadow util-linux"
 source=()
 source_sha256=()
 
 package() {
     mkdir -p $1/etc
+    mkdir -p $1/root
     
     cat > $1/etc/os-release << EOF
 NAME="sourim"
-PRETTY_NAME="SourimLinux `uname -m`"
+PRETTY_NAME="SourimLinux"
 EOF
+    echo "root:x:1000:100::/root:/bin/bash" > $1/etc/passwd
+    echo "root:sourimlinux:1000:100::/root:/bin/bash" > $1/etc/passwd-
+    echo "root:sourimlinux:19760::::::" > $1/etc/shadow
+    
+    echo "sourimlinux" > $1/etc/hostname
 }
