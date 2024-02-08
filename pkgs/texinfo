@@ -1,0 +1,14 @@
+name="texinfo"
+version="7.1"
+depends="glibc"
+source=(
+    "https://ftp.gnu.org/gnu/texinfo/texinfo-$version.tar.xz"
+)
+
+package() {
+    cd $name-$version
+    ./configure --prefix=/usr
+    make
+    make install DESTDIR=$1
+    make TEXMF=/usr/share/texmf install-tex DESTDIR=$1
+}
