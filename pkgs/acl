@@ -1,0 +1,15 @@
+name="acl"
+version="2.3.2"
+depends="glibc"
+source=(
+    "https://download.savannah.gnu.org/releases/acl/acl-$version.tar.xz"
+)
+
+package() {
+    cd $name-$version
+    ./configure --prefix=/usr         \
+        --disable-static      \
+        --docdir=/usr/share/doc/acl-2.3.2
+    make
+    make install DESTDIR=$1
+}
