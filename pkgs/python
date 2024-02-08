@@ -1,4 +1,4 @@
-name="Python"
+name="python"
 version="3.12.1"
 depends="glibc"
 source=(
