@@ -1,0 +1,23 @@
+name="zsh"
+version="5.9"
+depends="glibc"
+source=(
+    "https://www.zsh.org/pub/zsh-$version.tar.xz"
+)
+
+package() {
+    cd $name-$version
+    ./configure --prefix=/usr            \
+                --sysconfdir=/etc/zsh    \
+                --enable-etcdir=/etc/zsh \
+                --enable-cap             \
+                --enable-gdbm        
+    make
+    makeinfo  Doc/zsh.texi --html      -o Doc/html &&
+    makeinfo  Doc/zsh.texi --plaintext -o zsh.txt  &&
+    makeinfo  Doc/zsh.texi --html --no-split --no-headers -o zsh.html
+    make install DESTDIR=$1                                         &&
+    make infodir=$1/usr/share/info install.info                      &&
+    make htmldir=$1/usr/share/doc/zsh-5.9/html install.html          &&
+    install -v -m644 zsh.{html,txt} Etc/FAQ $1/usr/share/doc/zsh-5.9
+}
