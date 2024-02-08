@@ -1,0 +1,17 @@
+name="expect"
+version="5.45.4"
+depends="glibc tcl"
+source=(
+    "https://prdownloads.sourceforge.net/expect/expect5.45.4.tar.gz"
+)
+
+package() {
+    cd $name$version
+    ./configure --prefix=/usr           \
+        --with-tcl=/usr/lib     \
+        --enable-shared         \
+        --with-tclinclude=/usr/include
+    make
+    make install
+    ln -svf expect5.45.4/libexpect5.45.4.so $1/usr/lib
+}
