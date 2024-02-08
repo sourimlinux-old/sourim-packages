@@ -1,0 +1,20 @@
+name="binutils"
+version="2.34"
+depends="glibc"
+source=(
+    "http://ftp.gnu.org/gnu/binutils/binutils-$version.tar.xz"
+)
+
+package() {
+    cd $name-$version
+    ./configure --prefix=$1/usr       \
+         --enable-gold       \
+         --enable-ld=default \
+         --enable-plugins    \
+         --enable-shared     \
+         --disable-werror    \
+         --enable-64-bit-bfd \
+         --with-system-zlib
+    make
+    make install DESTDIR=$1
+}
