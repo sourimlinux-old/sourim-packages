@@ -1,0 +1,19 @@
+name="vim"
+version="8.1"
+depends="glibc"
+source=(
+    "git+https://github.com/vim/vim"
+)
+
+package() {
+    cd $name
+    echo '#define SYS_VIMRC_FILE  "/etc/vimrc"' >>  src/feature.h
+    echo '#define SYS_GVIMRC_FILE "/etc/gvimrc"' >> src/feature.h
+
+    ./configure --prefix=/usr    \
+            --with-features=huge \
+            --enable-gui=gtk3    \
+            --with-tlib=ncursesw
+    make
+    make install DESTDIR=$1
+}
