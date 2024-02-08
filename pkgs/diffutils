@@ -1,0 +1,13 @@
+name="diffutils"
+version="3.10"
+depends="glibc"
+source=(
+    "http://mirror.checkdomain.de/gnu/diffutils/diffutils-3.10.tar.xz"
+)
+
+package() {
+    cd $name-$version
+    ./configure --prefix=/usr
+    make
+    make install DESTDIR=$1
+}
