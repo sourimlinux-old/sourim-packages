@@ -7,9 +7,11 @@ source=(
 
 package() {
     cd $name-$version
-    ./configure --prefix=/usr   \
-            --enable-shared \
-            --without-ensurepip
+    CXX="$1/usr/bin/g++"               \
+    ./configure --prefix=/usr        \
+            --enable-shared      \
+            --with-system-expat  \
+            --enable-optimizations
     make
     make install DESTDIR=$1
 }
