@@ -1,8 +1,13 @@
 #!/bin/bash
 
 FLAG_FORCE=
+FLAG_IGNORE=
+FLAG_QUIET=
+
+MAKEPKG_OPTS=
 
 COMMAND=$1
+shift 1
 
 mkdir -p output
 
@@ -11,35 +16,51 @@ show_err() {
     exit 2
 }
 usage() {
-    echo "Usage: $0 COMMAND PACKAGE(s) OPTIONS"             1>&2
+    echo "Usage: $0 COMMAND OPTIONS PACKAGE(s)"             1>&2
     echo "Commands:"                                        1>&2
     echo "  build         Build package from source"        1>&2
     echo "  build-all     Build all packages from source"   1>&2
     echo "  help          Show this message"                1>&2
     echo "Options:"                                         1>&2
     echo "  -f            Forced to build packages"         1>&2
+    echo "  -q            "            1>&2
+    echo "  -i PACKAGEs   Ignore build packages"            1>&2
     exit 1
 }
 if (($# < 1)); then
     usage
 fi
 
-while getopts "fv" option; do
+while getopts "fqi:" option; do
     case $option in
-        f)   FLAG_FORCE=y   ;;
+        f)
+            FLAG_FORCE=y
+        ;;
+        i)
+            FLAG_IGNORE=$OPTARG
+        ;;
+        q)
+            FLAG_QUIET=y
+        ;;
+        *)
+            usage
+        ;;
     esac
 done
 shift $(( OPTIND-1 ))
-
+if [[ $FLAG_QUIET == y ]]; then
+    MAKEPKG_OPTS+=" -q"
+fi
 
 buildpkg() {
-    [[ ! -f pkgs/$1 ]] && show_err "'$1' package not found"
+    [[ $FLAG_IGNORE == *"$1"* ]] && echo "Ignore $1 package"
+    [[ ! -f pkgs/$1 ]]           && show_err "'$1' package not found"
+    echo "Start building '$1'..."
 
     cd output || exit 1
         . ../pkgs/$1 || exit 1
 
         if [[ ! -f "$name-$version-`uname -m`.spkg" || ! -z "$FLAG_FORCE" ]]; then
-            echo "Start building '$1'..."
             makepkg $MAKEPKG_OPTS ../pkgs/$1 || exit 1
         fi
     cd ..
