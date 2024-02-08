@@ -1,0 +1,19 @@
+name="cmake"
+version="3.28.3"
+depends="glibc"
+source=(
+    "https://cmake.org/files/$version/cmake-$version.tar.gz"
+)
+
+package() {
+    cd $name-$version
+    ./bootstrap --prefix=/usr        \
+            --system-libs            \
+            --mandir=/share/man      \
+            --no-system-jsoncpp      \
+            --no-system-cppdap       \
+            --no-system-librhash     \
+            --docdir=/share/doc/cmake-3.28.3
+    make
+    make install DESTDIR=$1
+}
