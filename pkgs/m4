@@ -1,0 +1,13 @@
+name="m4"
+version="1.4.19"
+depends="glibc"
+source=(
+    "https://ftp.gnu.org/gnu/m4/m4-$version.tar.xz"
+)
+
+package() {
+    cd $name-$version
+    ./configure --prefix=/usr
+    make
+    make install
+}
