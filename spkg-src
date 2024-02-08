@@ -80,11 +80,13 @@ makeinfo() {
     echo "Writing repo info done."
 }
 
-rm -rf $HOME/.cache/spkg-makepkg/
+if [[ -d $HOME/.cache/spkg-makepkg/ ]]; then
+    echo "Clear cache..."
+    rm -rf $HOME/.cache/spkg-makepkg/
+fi
 
 case $COMMAND in
     build)
-        shift 1
         [[ -z $@ ]] && show_err "error: nothing to build."
 
         for pkg in $@; do
