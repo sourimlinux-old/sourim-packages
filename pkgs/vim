@@ -1,6 +1,6 @@
 name="vim"
 version="8.1"
-depends="glibc"
+depends="glibc ncurses"
 source=(
     "git+https://github.com/vim/vim"
 )
