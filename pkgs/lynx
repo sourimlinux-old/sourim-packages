@@ -16,7 +16,7 @@ package() {
                 --with-ssl              \
                 --with-screen=ncursesw  \
                 --enable-locale-charset \
-                --datadir=$1/usr/share/doc/lynx-2.8.9rel.1
+                --datadir=/usr/share/doc/lynx-2.8.9rel.1
     make
     make install-full DESTDIR=$1
 }
