@@ -18,6 +18,6 @@ package() {
     make install DESTDIR=$1
     rm -fv $1/usr/lib/{libcom_err,libe2p,libext2fs,libss}.a
     gunzip -v $1/usr/share/info/libext2fs.info.gz
-    install-info --dir-file=/usr/share/info/dir $1/usr/share/info/libext2fs.info
+    install-info --dir-file=$1/usr/share/info/dir $1/usr/share/info/libext2fs.info
     sed 's/metadata_csum_seed,//' -i $1/etc/mke2fs.conf
 }
