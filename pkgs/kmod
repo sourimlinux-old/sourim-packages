@@ -1,8 +1,8 @@
 name="kmod"
-version="v30"
+version="v31"
 depends="glibc"
 source=(
-    "https://github.com/kmod-project/kmod/archive/refs/tags/$version.zip"
+    "https://www.kernel.org/pub/linux/utils/kernel/kmod/kmod-$version.tar.xz
 )
 
 package() {
