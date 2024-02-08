@@ -1,0 +1,14 @@
+name="expat"
+version="2.5.0"
+depends="glibc"
+source=(
+    "https://prdownloads.sourceforge.net/expat/expat-$version.tar.xz"
+)
+
+package() {
+    cd $name-$version
+    ./configure --prefix=/usr    \
+        --disable-static \
+    make
+    make install DESTDIR=$1
+}
