@@ -1,0 +1,15 @@
+name="Python"
+version="3.12.1"
+depends="glibc"
+source=(
+    "https://www.python.org/ftp/python/$version/Python-$version.tar.xz
+)
+
+package() {
+    cd $name-$version
+    ./configure --prefix=/usr   \
+            --enable-shared \
+            --without-ensurepip
+    make
+    make install DESTDIR=$1
+}
