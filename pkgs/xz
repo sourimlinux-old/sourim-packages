@@ -1,0 +1,14 @@
+name="xz"
+version="5.4.6"
+depends="glibc"
+source=(
+    "https://github.com/tukaani-project/xz/releases/download/v$version/xz-$version.tar.xz"
+)
+
+package() {
+    cd $name-$version
+    ./configure --prefix=/usr    \
+        --disable-static \
+    make
+    make install DESTDIR=$1
+}
