@@ -12,7 +12,6 @@ package() {
 
     ./configure --prefix=/usr    \
             --with-features=huge \
-            --enable-gui=gtk3    \
             --with-tlib=ncursesw
     make
     make install DESTDIR=$1
