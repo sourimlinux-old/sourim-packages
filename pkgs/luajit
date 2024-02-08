@@ -1,0 +1,14 @@
+name="luajit"
+version="2.1.r140.gc525bcb9"
+depends="glibc"
+source=(
+    "git+https://luajit.org/git/luajit.git"
+)
+
+package() {
+    cd $name-$version
+    make TARGET_STRIP=" @:" amalg
+    make PREFIX="/usr" install DESTDIR="$1"
+    install -Dm644 "COPYRIGHT" -t "$1/usr/share/licenses/luajit"
+    make install DESTDIR=$1
+}
