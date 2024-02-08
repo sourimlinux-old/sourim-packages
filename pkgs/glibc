@@ -2,7 +2,7 @@ name="glibc"
 version="2.39"
 depends=""
 source=(
-    "https://ftp.gnu.org/gnu/glibc/glibc-$version.tar.xz"
+    "http://mirror.checkdomain.de/gnu/glibc/glibc-$version.tar.xz"
 )
 
 package() {

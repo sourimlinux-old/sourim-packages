@@ -2,7 +2,7 @@ name="mpfr"
 version="4.2.1"
 depends="glibc gmp"
 source=(
-    "https://ftp.gnu.org/gnu/mpfr/mpfr-$version.tar.xz"
+    "http://mirror.checkdomain.de/gnu/mpfr/mpfr-$version.tar.xz"
 )
 
 package() {

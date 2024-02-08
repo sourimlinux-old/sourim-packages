@@ -2,7 +2,7 @@ name="texinfo"
 version="7.1"
 depends="glibc"
 source=(
-    "https://ftp.gnu.org/gnu/texinfo/texinfo-$version.tar.xz"
+    "http://mirror.checkdomain.de/gnu/texinfo/texinfo-$version.tar.xz"
 )
 
 package() {

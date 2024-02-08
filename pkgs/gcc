@@ -2,7 +2,7 @@ name="gcc"
 version="13.2.0"
 depends="glibc binutils mpc mpfr gmp"
 source=(
-    "https://ftp.gnu.org/gnu/gcc/gcc-$version/gcc-$version.tar.xz"
+    "http://mirror.checkdomain.de/gnu/gcc/gcc-$version/gcc-$version.tar.xz"
 )
 
 package() {

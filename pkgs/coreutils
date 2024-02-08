@@ -2,7 +2,7 @@ name="coreutils"
 version="9.4"
 depends="glibc"
 source=(
-    "https://ftp.gnu.org/gnu/coreutils/coreutils-$version.tar.xz"
+    "http://mirror.checkdomain.de/gnu/coreutils/coreutils-$version.tar.xz"
 )
 
 package() {

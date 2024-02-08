@@ -2,7 +2,7 @@ name="m4"
 version="1.4.19"
 depends="glibc"
 source=(
-    "https://ftp.gnu.org/gnu/m4/m4-$version.tar.xz"
+    "http://mirror.checkdomain.de/gnu/m4/m4-$version.tar.xz"
 )
 
 package() {

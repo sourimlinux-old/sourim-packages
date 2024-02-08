@@ -2,7 +2,7 @@ name="readline"
 version="8.2"
 depends="glibc ncurses"
 source=(
-    "https://ftp.gnu.org/gnu/readline/readline-$version.tar.gz"
+    "http://mirror.checkdomain.de/gnu/readline/readline-$version.tar.gz"
 )
 
 package() {

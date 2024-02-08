@@ -23,7 +23,7 @@ usage() {
     echo "  help          Show this message"                1>&2
     echo "Options:"                                         1>&2
     echo "  -f            Forced to build packages"         1>&2
-    echo "  -q            "            1>&2
+    echo "  -q            Quiet build"            1>&2
     echo "  -i PACKAGEs   Ignore build packages"            1>&2
     exit 1
 }

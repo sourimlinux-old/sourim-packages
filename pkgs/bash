@@ -2,7 +2,7 @@ name="bash"
 version="5.2.21"
 depends="glibc readline ncurses"
 source=(
-    "https://ftp.gnu.org/gnu/bash/bash-$version.tar.gz"
+    "http://mirror.checkdomain.de/gnu/bash/bash-$version.tar.gz"
 )
 
 package() {

@@ -2,7 +2,7 @@ name="grub"
 version="2.12"
 depends="glibc"
 source=(
-    "https://ftp.gnu.org/gnu/grub/grub-$version.tar.xz"
+    "http://mirror.checkdomain.de/gnu/grub/grub-$version.tar.xz"
 )
 
 package() {

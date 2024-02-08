@@ -2,7 +2,7 @@ name="inetutils"
 version="2.5"
 depends="glibc"
 source=(
-    "https://ftp.gnu.org/gnu/inetutils/inetutils-$version.tar.xz"
+    "http://mirror.checkdomain.de/gnu/inetutils/inetutils-$version.tar.xz"
 )
 
 package() {

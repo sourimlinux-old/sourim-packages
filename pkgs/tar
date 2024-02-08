@@ -2,7 +2,7 @@ name="tar"
 version="1.35"
 depends="glibc"
 source=(
-    "https://ftp.gnu.org/gnu/tar/tar-$version.tar.xz"
+    "http://mirror.checkdomain.de/gnu/tar/tar-$version.tar.xz"
 )
 
 package() {

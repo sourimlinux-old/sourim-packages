@@ -2,7 +2,7 @@ name="sed"
 version="4.9"
 depends="glibc"
 source=(
-    "https://ftp.gnu.org/gnu/sed/sed-$version.tar.xz"
+    "http://mirror.checkdomain.de/gnu/sed/sed-$version.tar.xz"
 )
 
 package() {

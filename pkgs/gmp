@@ -2,7 +2,7 @@ name="gmp"
 version="6.3.0"
 depends="glibc"
 source=(
-    "https://ftp.gnu.org/gnu/gmp/gmp-$version.tar.xz"
+    "http://mirror.checkdomain.de/gnu/gmp/gmp-$version.tar.xz"
 )
 
 package() {

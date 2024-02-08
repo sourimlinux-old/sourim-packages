@@ -2,7 +2,7 @@ name="gzip"
 version="1.13"
 depends="glibc"
 source=(
-    "https://ftp.gnu.org/gnu/gzip/gzip-$version.tar.xz"
+    "http://mirror.checkdomain.de/gnu/gzip/gzip-$version.tar.xz"
 )
 
 package() {
