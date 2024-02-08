@@ -1,0 +1,13 @@
+name="file"
+version="5.45"
+depends="glibc"
+source=(
+    "https://astron.com/pub/file/file-$version.tar.gz"
+)
+
+package() {
+    cd $name-$version
+    ./configure --prefix=/usr
+    make
+    make install DESTDIR=$1
+}
