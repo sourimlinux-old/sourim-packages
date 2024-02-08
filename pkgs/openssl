@@ -1,0 +1,18 @@
+name="openssl"
+version="3.2.1"
+depends="glibc zlib"
+source=(
+    "https://www.openssl.org/source/openssl-3.2.1.tar.gz"
+)
+
+package() {
+    cd $name-$version
+    ./config --prefix=/usr         \
+         --openssldir=/etc/ssl \
+         --libdir=lib          \
+         shared                \
+         zlib-dynamic
+    make
+    sed -i '/INSTALL_LIBS/s/libcrypto.a libssl.a//' Makefile
+    make MANSUFFIX=ssl install DESTDIR=$1
+}
