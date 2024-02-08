@@ -1,20 +1,20 @@
 name="gcc"
 version="13.2.0"
-depends="glibc binutils"
+depends="glibc binutils mpc mpfr gmp"
 source=(
-  "https://ftp.gnu.org/gnu/gcc/gcc-$version/gcc-$version.tar.xz"
+    "https://ftp.gnu.org/gnu/gcc/gcc-$version/gcc-$version.tar.xz"
 )
 
 package() {
     cd $name-$version
-    ./configure \
-      --prefix=/usr \
-      --disable-multilib \
-      --with-system-zlib \
-      --enable-default-pie \
-      --enable-default-ssp \
-      --disable-fixincludes \
-      --enable-languages=c,c++,fortran,go,objc,obj-c++,m2
+    ./contrib/download_prerequisites
+    ./configure --prefix=/usr           \
+                --disable-multilib      \
+                --with-system-zlib      \
+                --enable-default-pie    \
+                --enable-default-ssp    \
+                --disable-fixincludes   \
+                --enable-languages=c,c++,fortran,go,objc,obj-c++,m2
     make
     make install DESTDIR=$1
 }

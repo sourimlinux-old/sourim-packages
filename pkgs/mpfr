@@ -1,0 +1,17 @@
+name="mpfr"
+version="4.2.1"
+depends="glibc gmp"
+source=(
+    "https://ftp.gnu.org/gnu/mpfr/mpfr-$version.tar.xz"
+)
+
+package() {
+    cd $name-$version
+    ./configure --prefix=/usr        \
+                --disable-static     \
+                --enable-thread-safe \
+                --docdir=/usr/share/doc/mpfr-$version
+
+    make
+    make install DESTDIR=$1
+}
