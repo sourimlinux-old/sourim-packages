@@ -1,5 +1,5 @@
 name="kmod"
-version="v31"
+version="31"
 depends="glibc"
 source=(
     "https://www.kernel.org/pub/linux/utils/kernel/kmod/kmod-$version.tar.xz
