@@ -1,0 +1,15 @@
+name="gettext"
+version="0.22.4"
+depends="glibc"
+source=(
+    "https://ftp.gnu.org/pub/gnu/gettext/$name-$version.tar.gz"
+)
+
+package() {
+    cd $name
+    ./configure --prefix=/usr \
+            --disable-static  \
+            --docdir=/usr/share/doc/gettext-0.22.4
+    make
+    make install DESTDIR=$1
+}
