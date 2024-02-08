@@ -55,12 +55,12 @@ fi
 buildpkg() {
     [[ $FLAG_IGNORE == *"$1"* ]] && echo "Ignore $1 package"
     [[ ! -f pkgs/$1 ]]           && show_err "'$1' package not found"
-    echo "Start building '$1'..."
 
     cd output || exit 1
         . ../pkgs/$1 || exit 1
 
         if [[ ! -f "$name-$version-`uname -m`.spkg" || ! -z "$FLAG_FORCE" ]]; then
+            echo "Start building '$1'..."
             makepkg $MAKEPKG_OPTS ../pkgs/$1 || exit 1
         fi
     cd ..
