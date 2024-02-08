@@ -17,7 +17,7 @@ package() {
         --disable-rlogin     \
         --disable-rsh        \
         --disable-servers
-        make
-        make install DESTDIR=$1
-        mv -v $1/usr/{,s}bin/ifconfig
+    make
+    make install DESTDIR=$1
+    mv -v $1/usr/{,s}bin/ifconfig
 }
