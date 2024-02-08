@@ -1,0 +1,17 @@
+name="tar"
+version="1.35"
+depends="glibc"
+source=(
+    "https://ftp.gnu.org/gnu/tar/tar-$version.tar.xz"
+)
+
+package() {
+    cd $name-$version
+    CXX="$1/usr/bin/g++"               \
+    ./configure --prefix=/usr        \
+            --enable-shared      \
+            --with-system-expat  \
+            --enable-optimizations
+    make
+    make install DESTDIR=$1
+}
