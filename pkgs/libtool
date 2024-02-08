@@ -1,0 +1,13 @@
+name="libtool"
+version="2.4.7"
+depends="glibc"
+source=(
+    "https://ftpmirror.gnu.org/libtool/$name-$version.tar.gz"
+)
+
+package() {
+    cd $name
+    ./configure --prefix=/usr
+    make
+    make install DESTDIR=$1
+}
