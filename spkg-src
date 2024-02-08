@@ -1,9 +1,8 @@
 #!/bin/bash
 
 FLAG_FORCE=
-MAKEPKG_OPTS="-q"
 
-COMMAND=
+COMMAND=$1
 
 mkdir -p output
 
@@ -12,33 +11,28 @@ show_err() {
     exit 2
 }
 usage() {
-    echo "Usage: $0 COMMAND OPTIONS PACKAGE(s)"             1>&2
+    echo "Usage: $0 COMMAND PACKAGE(s) OPTIONS"             1>&2
     echo "Commands:"                                        1>&2
     echo "  build         Build package from source"        1>&2
     echo "  build-all     Build all packages from source"   1>&2
     echo "  help          Show this message"                1>&2
     echo "Options:"                                         1>&2
     echo "  -f            Forced to build packages"         1>&2
-    echo "  -v            Enable log output"                1>&2
     exit 1
 }
 if (($# < 1)); then
     usage
 fi
 
-COMMAND=$1
-
 while getopts "fv" option; do
     case $option in
         f)   FLAG_FORCE=y   ;;
-        v)   MAKEPKG_OPTS=""  ;;
     esac
 done
-shift $(( OPTIND ))
+shift $(( OPTIND-1 ))
 
 
 buildpkg() {
-    [[ $1 == "-"* ]] && return
     [[ ! -f pkgs/$1 ]] && show_err "'$1' package not found"
 
     cd output || exit 1

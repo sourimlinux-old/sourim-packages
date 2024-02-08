@@ -9,7 +9,7 @@ package() {
     cd $name-$version
     ./configure --prefix=/usr     \
         --disable-static  \
-        --sysconfdir=/etc \
+        --sysconfdir=/etc
     make
     make install DESTDIR=$1
 }
