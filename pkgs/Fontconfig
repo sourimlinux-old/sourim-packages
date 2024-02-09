@@ -1,0 +1,17 @@
+name="fontconfig"
+version="2.15.0"
+depends="glibc"
+source=(
+    "https://www.freedesktop.org/software/fontconfig/release/fontconfig-$version.tar.xz"
+)
+
+package() {
+    cd $name-$version
+    ./configure --prefix=/usr        \
+            --sysconfdir=/etc        \
+            --localstatedir=/var     \
+            --disable-docs           \
+            --docdir=/usr/share/doc/fontconfig-2.15.0
+    make
+    make install DESTDIR=$1
+}
