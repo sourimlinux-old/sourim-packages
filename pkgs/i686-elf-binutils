@@ -9,7 +9,7 @@ package() {
     mkdir -p "i686-binutils-$version-build"
     cd "i686-binutils-$version-build"
     ../binutils-$version/configure \
-                 --target=$_target \
+                 --target=i686-elf \
                     --with-sysroot \
                      --prefix=/usr \
                  --bindir=/usr/bin \
