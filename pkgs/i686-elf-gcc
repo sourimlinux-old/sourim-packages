@@ -1,0 +1,24 @@
+name="i686-elf-gcc"
+version="13.2.0"
+depends="glibc mpc gmp mpfr"
+source=(
+    "https://mirrors.kernel.org/gnu/gcc/gcc-$version/gcc-$version.tar.xz"
+)
+
+package() {
+    mkdir -p "i686-gcc-$version-build"
+    cd "i686-gcc-$version-build"
+        ../gcc-$version/configure \
+	                 --prefix=/usr \
+	             --target=i686-elf \
+	                 --disable-nls \
+	              --disable-werror \
+	            --disable-multilib \
+	             --without-headers \
+	      --enable-languages=c,c++ \
+   --disable-build-format-warnings
+  make all-gcc
+  make all-target-libgcc
+  make install-gcc DESTDIR=$1
+  make install-target-libgcc DESTDIR=$1
+}
