@@ -1,0 +1,13 @@
+name="freetype"
+version="2.13.2"
+depends="glibc"
+source=(
+    "https://downloads.sourceforge.net/freetype/freetype-doc-$version.tar.xz"
+)
+
+package() {
+    cd $name-$version
+    ./configure --prefix=/usr --enable-freetype-config --disable-static
+    make
+    make install DESTDIR=$1
+}
