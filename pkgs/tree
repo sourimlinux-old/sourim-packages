@@ -1,0 +1,12 @@
+name="tree"
+version="2.1.1"
+depends="glibc"
+source=(
+    "https://gitlab.com/OldManProgrammer/unix-tree/-/archive/$version/unix-tree-$version.tar.bz2"
+)
+
+package() {
+    cd $name-$version
+    make
+    make PREFIX=/usr MANDIR=/usr/share/man install DESTDIR=$1
+}
