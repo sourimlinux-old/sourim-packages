@@ -1,0 +1,24 @@
+name="x86_64-elf-gcc"
+version="13.2.0"
+depends="glibc mpc gmp mpfr"
+source=(
+    "https://mirrors.kernel.org/gnu/gcc/gcc-$version/gcc-$version.tar.xz"
+)
+
+package() {
+    mkdir -p "x86_64-gcc-$version-build"
+    cd "x86_64-gcc-$version-build"
+        ../gcc-$version/configure \
+	                 --prefix=/usr \
+	             --target=x86_64-elf \
+	                 --disable-nls \
+	              --disable-werror \
+	            --disable-multilib \
+	             --without-headers \
+	      --enable-languages=c,c++ \
+   --disable-build-format-warnings
+  make all-gcc
+  make all-target-libgcc
+  make install-gcc DESTDIR=$1
+  make install-target-libgcc DESTDIR=$1
+}
