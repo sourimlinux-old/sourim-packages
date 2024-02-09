@@ -9,5 +9,5 @@ package() {
     cd $name-$version
     ./configure --prefix=/usr --disable-static  
     make
-    sudo make install DESTDIR=$1
+    make install DESTDIR=$1
 }
