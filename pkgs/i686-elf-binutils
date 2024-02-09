@@ -1,0 +1,22 @@
+name="i686-elf-binutils"
+version="2.42"
+depends="glibc libelf zlib"
+source=(
+    "https://mirrors.kernel.org/gnu/binutils/binutils-$version.tar.xz"
+)
+
+package() {
+    mkdir -p "i686-binutils-$version-build"
+    cd "i686-binutils-$version-build"
+    ../binutils-$version/configure \
+                 --target=$_target \
+                    --with-sysroot \
+                     --prefix=/usr \
+                 --bindir=/usr/bin \
+       --libdir=/usr/lib/i686-elf/ \
+                    --disable-nls \
+              --disable-werror
+    make
+    make install DESTDIR=$1
+    rm -rf ${1}/usr/share/{info,man}
+}
