@@ -1,0 +1,22 @@
+name="x86_64-elf-binutils"
+version="2.42"
+depends="glibc libelf zlib"
+source=(
+    "https://mirrors.kernel.org/gnu/binutils/binutils-$version.tar.xz"
+)
+
+package() {
+    mkdir -p "x86_64-binutils-$version-build"
+    cd "x86_64-binutils-$version-build"
+    ../binutils-$version/configure \
+                 --target=x86_64-elf \
+                    --with-sysroot \
+                     --prefix=/usr \
+                 --bindir=/usr/bin \
+      --libdir=/usr/lib/x86_64-elf/ \
+                    --disable-nls \
+              --disable-werror
+    make
+    make install DESTDIR=$1
+    rm -rf ${1}/usr/share/{info,man}
+}
